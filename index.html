@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WLG</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body>
+        <hr/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Chat</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <textarea id="messages" rows="15" class="form-control" aria-label="With textarea" readonly></textarea>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text" id="basic-addon1">Message ></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Entrez votre message" aria-label="Username" id="msg" aria-describedby="basic-addon1">
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="offset-md-10 col-md-2">
+                                    <button type="button" onclick="sendMessage()" class="btn btn-success">
+                                        <span class="material-icons">
+                                            send
+                                        </span>
+                                        Envoyer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+        <script src="js/chatClient.js"></script>
+    </body>
+</html>
