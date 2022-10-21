@@ -1,4 +1,4 @@
-<p align="center"><img src="img/icon_name.png" /></p>
+<p align="center"><img style="width:200px;" src="img/icon_name.png" /></p>
 
 ------
 
