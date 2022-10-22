@@ -17,15 +17,15 @@ async def clientHandler(websocket, path):
             action = message.split(":")[0]
             print("action : " + action)
             if action == "generate":
-                generate(message)
+                await generate(message)
             elif action == "resultGeneration":
-                resultGeneration()
+                await resultGeneration()
 
     finally:
         clients.remove(websocket)
 
 
-def generate(message):
+async def generate(message):
     words = message.split(":")[1].split(";")
 
     temporaryList = "file.txt"
@@ -48,7 +48,7 @@ def generate(message):
         await asyncio.wait([client.send("end:blabla") for client in clients])
 
 
-def resultGeneration():
+async def resultGeneration():
     print("Want the result file")
     if os.path.exists("result.txt"):
         if clients:
