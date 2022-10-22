@@ -55,7 +55,7 @@ function generate(){
 
     if(temporaryList.childElementCount > 0){
         let childrens = temporaryList.children;
-        let concatToSend = "";
+        let concatToSend = "generate:";
         for(let i=0; i< childrens.length; i++){
             let element = childrens[i].lastElementChild.textContent;
             concatToSend += element+";";
