@@ -58,10 +58,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-striped" id="temporary_list">
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>mot</td>
-                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -82,9 +78,11 @@
                                     <h3>Generate List</h3>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success" style="border-radius: 50%;"
-                                            onclick="DownloadList()">
-                                        <span class="material-symbols-outlined" style="margin-top: 5px">file_download</span>
+                                    <button type="button" class="btn btn-success" style="border-radius: 50%;" id="btn_dl"
+                                        onclick="getFile()" disabled>
+                                        <span class="material-symbols-outlined" style="margin-top: 5px;" id="span_dl">
+                                            file_download
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -99,10 +97,6 @@
                                 </tr>
                             </thead>
                             <tbody class="table-striped" id="generate_list">
-                                <tr>
-                                    <td>1</td>
-                                    <td>mot</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

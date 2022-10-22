@@ -110,10 +110,14 @@ def command(word_list, command):
     return new_word_list
 
 
-if __name__ == '__main__':
+def steps():
     tab = open_file("file.txt")
     tab = command(tab, "@#***")
     # tab = add_special_characters(tab)
     # tab = add_number(tab, 2')
     # print_tab(tab)
     write_file("result.txt", tab)
+
+
+if __name__ == '__main__':
+    steps()

@@ -1,10 +1,11 @@
-var websocket;
-
+let websocket;
+let url = "ws://localhost:9000/";
+let downloadMode = false;
 // Initialize the webSocket
 createWebSocket();
 
 function createWebSocket() {
-    websocket= new WebSocket("ws://localhost:9000/");
+    websocket= new WebSocket(url);
 }
 
 function addWordToList(word){
@@ -52,36 +53,64 @@ document.getElementById('upload_file').addEventListener('change', readFile);
 
 function generate(){
     let temporaryList = document.getElementById("temporary_list");
-
     if(temporaryList.childElementCount > 0){
         let childrens = temporaryList.children;
         let concatToSend = "generate:";
         for(let i=0; i< childrens.length; i++){
             let element = childrens[i].lastElementChild.textContent;
-            concatToSend += element+";";
+            if(i < childrens.length -1){
+                concatToSend += element+";";
+            }else{
+                concatToSend += element;
+            }
         }
         websocket.send(concatToSend);
     }
 }
 
 
-// Réception du message envoyé par le serveur + Affichage
+function getFile(){
+    websocket.send("resultGeneration");
+    let btn_dl = document.getElementById("btn_dl");
+    btn_dl.setAttribute("disabled", "true");
+}
+
+
+// Collect message and print it on the web page
 websocket.onmessage = function (event) {
     let generateList = document.getElementById("generate_list");
-    generateList.innerHTML = "";
-    let receiveData = event.data.split(";");
-    for(let i=0; i<receiveData.length;i++){
-        let addHtml = "<tr><td>"+(i+1)+"</td><td>"+receiveData[i]+"</td></tr>";
-        generateList.insertAdjacentHTML("beforeend", addHtml);
+    let receiveData = event.data;
+
+    if(receiveData.split(":")[0] === "/s"){
+        downloadMode = true;
+    }else if (receiveData.split(":")[0] === "/q"){
+        downloadMode = false;
+    }
+
+    if(downloadMode){
+        //comment faire lors du dl
+    }else{
+        if(receiveData.split(":")[0] === "end"){//end of the generation
+        let btn_dl = document.getElementById("btn_dl");
+        btn_dl.removeAttribute("disabled");
+        }else{
+           let numberOfWordGenerate = generateList.childElementCount;
+            if(numberOfWordGenerate >= 50){
+                console.log(""+(numberOfWordGenerate+1)+" : "+receiveData);
+            }else{
+                let addHtml = "<tr><td>"+(numberOfWordGenerate+1)+"</td><td>"+receiveData+"</td></tr>";
+                generateList.insertAdjacentHTML("beforeend", addHtml);
+            }
+        }
     }
 };
 
-// Notification de connexion
+// login notification
 websocket.onopen = function () {
     console.log("Connection to the server successfully established");
 }
 
-// Notification de déconnexion (jamais appelée)
+// Logout notification
 websocket.onclose = function () {
-    websocket.send(login+" a quitté le canal de discussion");
+    console.log("Connection to the server successfully closed");
 }
