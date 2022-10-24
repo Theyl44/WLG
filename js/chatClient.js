@@ -38,7 +38,7 @@ function readFile(){
 	}else{
         file.onload = () => {
             let listSplit = file.result.split(/\r\n|\n/);
-            for(let i=0; i<listSplit.length -1;i++){
+            for(let i=0; i<listSplit.length;i++){
                 addWordToList(listSplit[i]);
             }
         }
