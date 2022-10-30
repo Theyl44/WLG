@@ -14,5 +14,6 @@ Exemple : Dans le cas d’un pentest de l’isen ouest, nous souhaitons génére
 Pour se faire, lancer le fichier webserver.py
 Ensuite ouvrer votre fichier index.html
 
-Il ne vous reste plus qu'a trouvé un fichier ou faire une liste pour l'envoyer au serveur et que les mots soient traités
+Il ne vous reste plus qu'à trouver un fichier / liste ou faire une liste afin que cette dernière soit traitée par
+le serveur
 </p>
