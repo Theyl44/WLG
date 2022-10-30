@@ -1,6 +1,15 @@
 # Generator file
 
 class Generator:
+    def __init__(self):
+        self.__typo = "@#***"
+
+    def setTypo(self, typo):
+        self.__typo = typo
+
+    def getTypo(self):
+        return self.__typo
+
     def open_file(self, file_path):
         array = []
         f = open(file_path, "r")
@@ -110,7 +119,7 @@ class Generator:
 
     def steps(self):
         tab = self.open_file("file.txt")
-        tab = self.__command(tab, "@#***")
+        tab = self.__command(tab, self.__typo)
         # tab = add_special_characters(tab)
         # tab = add_number(tab, 2')
         # print_tab(tab)

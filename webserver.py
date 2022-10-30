@@ -18,6 +18,8 @@ async def clientHandler(websocket, path):
             print("action : " + action)
             if action == "generate":
                 await generate(message)
+            elif action == "typo":
+                await choseTypo(message.split(":")[1])
             elif action == "resultGeneration":
                 await resultGeneration()
 
@@ -48,7 +50,12 @@ async def generate(message):
         await asyncio.wait([client.send("end:blabla") for client in clients])
 
 
-async def resultGeneration():
+async def choseTypo(message):
+    generatorWords.setTypo(message)
+    print("New typo is : ", message)
+
+
+async def resultGeneration(): #TODO
     print("Want the result file")
     if os.path.exists("result.txt"):
         if clients:

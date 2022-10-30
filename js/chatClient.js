@@ -10,9 +10,13 @@ function createWebSocket() {
 
 function addWordToList(word){
     let temporaryTableList = document.getElementById("temporary_list");
-        let newNumber = temporaryTableList.childElementCount + 1;
-        let element = "<tr><td>"+newNumber+"</td><td>"+word+"</td></tr>";
-        temporaryTableList.insertAdjacentHTML("beforeend", element);
+    let newNumber = temporaryTableList.childElementCount + 1;
+    let element = "<tr><td>"+newNumber+"</td><td>"+word+"</td></tr>";
+    temporaryTableList.insertAdjacentHTML("beforeend", element);
+
+    //------V2-------
+    // let area = document.getElementById("wordList");
+    // area.value += word+"\n";
 }
 
 
@@ -21,6 +25,17 @@ function addWord(){
     let wordToAdd = document.getElementById("wordToAdd").value;
     if(wordToAdd !== ""){
         addWordToList(wordToAdd);
+    }
+}
+
+function addTypo(){
+    let typoUse = document.getElementById("typo").value;
+    let regexp = /[#**@]/;
+    if(typoUse !== "" && regexp.test(typoUse)){
+        console.log("Typo isn't empty");
+        let concatToSend = "typo:";
+        concatToSend += typoUse;
+        websocket.send(concatToSend);
     }
 }
 
