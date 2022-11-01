@@ -34,27 +34,39 @@ class Handler(SimpleHTTPRequestHandler):
                 self.end_headers()
                 shutil.copyfileobj(file, self.wfile)
 
-        elif self.path == "/js/chatClient.js":
-            # self.send_response(200)
-            # self.send_header("Content-Type", "application/javascript")
-            # self.end_headers()
-            self.path = "/js/chatClient.js"
-            return SimpleHTTPRequestHandler.do_GET(self)
+        elif self.path == "/js/chat-mode_server.js":
+            with open("js/chat-mode_server.js", 'rb') as file:
+                self.send_response(200)
+                self.send_header("Content-type", "text/javascript")
+                self.send_header("Content-Disposition", 'inline; '
+                                                        'filename="{}"'.format(
+                                                            os.path.basename("js/chat-mode_server.js")))
+                fs = os.fstat(file.fileno())
+                self.send_header("Content-Length", str(fs.st_size))
+                self.end_headers()
+                shutil.copyfileobj(file, self.wfile)
 
         else:
             self.path = "/app.html"
             return SimpleHTTPRequestHandler.do_GET(self)
 
     def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        self.send_response(200)
-        self.end_headers()
-        response = BytesIO()
-        response.write(b'This is POST request. ')
-        response.write(b'Received: ')
-        response.write(body)
-        self.wfile.write(response.getvalue())
+        print("path : ", self.path)
+        if self.path == "/?act=addTypo":
+            print("headers : ", self.headers)
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
+            print(body)
+            self.path = "/app.html"
+            return SimpleHTTPRequestHandler.do_GET(self)
+
+        elif self.path == "/?act=addWord":
+            print("headers : ", self.headers)
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
+            print(body)
+            self.path = "/app.html"
+            return SimpleHTTPRequestHandler.do_GET(self)
 
     def do_PUT(self):
         filename = os.path.basename(self.path)
