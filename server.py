@@ -2,13 +2,14 @@ import os
 import shutil
 
 from generator import Generator
-import sys
+import urllib.parse as parseURL
 from http.server import HTTPServer, BaseHTTPRequestHandler, SimpleHTTPRequestHandler
 import time
 from io import BytesIO
 
 hostname = "localhost"
 port = 8080
+generator = Generator()
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -57,14 +58,28 @@ class Handler(SimpleHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
             print(body)
+            typo = body.decode('utf-8').split("=")[1]
+            print(typo)
+            generator.setTypo(typo)
             self.path = "/app.html"
             return SimpleHTTPRequestHandler.do_GET(self)
 
-        elif self.path == "/?act=addWord":
+        elif self.path == "/?act=generateList":
             print("headers : ", self.headers)
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
             print(body)
+            decodeBody = parseURL.unquote(body.decode('utf-8'))
+            typo = decodeBody.split("&")[0]
+            generator.setTypo(typo.split("=")[1])
+            wordListRequest = decodeBody.split("&")[1].split("=")[1]
+            wordList = wordListRequest.split("\r")
+            if wordList.__contains__("\n"):
+                wordList.remove("\n")
+            print(wordList)
+            temporaryList = "tmp.txt"
+            generator.write_file(file_path=temporaryList, word_list=wordList)
+            generator.steps()
             self.path = "/app.html"
             return SimpleHTTPRequestHandler.do_GET(self)
 
@@ -80,7 +95,7 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 web_server = HTTPServer((hostname, port), Handler)
-print("Server start on {0}:{1}\n".format(hostname, port))
+print("Server start on http://{0}:{1}\n".format(hostname, port))
 
 try:
     web_server.serve_forever()

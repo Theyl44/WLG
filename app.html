@@ -20,10 +20,13 @@
                                     <h3>Temporary List</h3>
                                 </div>
                                 <div class="col-md-1">
-                                    <button type="button" class="btn btn-success" style="border-radius: 50%;"
-                                              onclick="generate()">
-                                        <span class="material-symbols-outlined" style="margin-top: 5px">play_arrow</span>
-                                    </button>
+                                    <form method="POST" action="/?act=generateList">
+                                        <input type="text" id="stored_typo" name="stored_typo" hidden>
+                                        <textarea id="wordList" name="wordList" hidden></textarea>
+                                        <button type="submit" class="btn btn-success" style="border-radius: 50%;">
+                                            <span class="material-symbols-outlined" style="margin-top: 5px">play_arrow</span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -43,15 +46,13 @@
                                         <br>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <form method="POST" action="?act=addTypo">
-                                                    <div class="input-group mb-3">
-                                                        <input type="text" class="form-control" id="typo" name="typo" placeholder="Regular Expression : @#**" aria-label="Typo to use for your words" aria-describedby="add_typo_button">
-                                                        <button class="btn btn-outline-secondary" type="submit"
-                                                                id="add_typo_button" onclick="addTypo()">
-                                                            ADD
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" id="typo" name="typo" placeholder="Regular Expression : @#**" aria-label="Typo to use for your words" aria-describedby="add_typo_button">
+                                                    <button class="btn btn-outline-secondary" type="submit"
+                                                            id="add_typo_button" onclick="addTypo()">
+                                                        ADD
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -68,15 +69,13 @@
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <form method="POST" action="/?act=addWord">
-                                                    <div class="input-group mb-3">
-                                                        <input type="text" class="form-control" id="wordToAdd" name="wordToAdd" placeholder="Word to add to the list" aria-label="Word to add to the list" aria-describedby="add_word_button">
-                                                        <button class="btn btn-outline-secondary" type="button"
-                                                                id="add_word_button" onclick="addWord()">
-                                                            ADD
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" id="wordToAdd" name="wordToAdd" placeholder="Word to add to the list" aria-label="Word to add to the list" aria-describedby="add_word_button">
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                            id="add_word_button" onclick="addWord()">
+                                                        ADD
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">

@@ -1,3 +1,12 @@
+function checkUrl(){
+    let url = document.URL;
+    console.log(url);
+}
+
+checkUrl();
+
+
+
 function addWordToList(word){
     let temporaryTableList = document.getElementById("temporary_list");
     let newNumber = temporaryTableList.childElementCount + 1;
@@ -5,8 +14,8 @@ function addWordToList(word){
     temporaryTableList.insertAdjacentHTML("beforeend", element);
 
     //------V2-------
-    // let area = document.getElementById("wordList");
-    // area.value += word+"\n";
+    let area = document.getElementById("wordList");
+    area.value += word+"\n";
 }
 
 
@@ -20,12 +29,12 @@ function addWord(){
 
 function addTypo(){
     let typoUse = document.getElementById("typo").value;
-    let regexp = /[#**@]/;
+    let regexp = /[#*@]/;
     if(typoUse !== "" && regexp.test(typoUse)){
         console.log("Typo isn't empty");
-        let concatToSend = "typo:";
-        concatToSend += typoUse;
-        websocket.send(concatToSend);
+        let typoArea = document.getElementById("stored_typo");
+        typoArea.value = typoUse;
+
     }
 }
 
@@ -33,7 +42,10 @@ function addTypo(){
 // read file and check the extension
 function readFile(){
     let temporaryList = document.getElementById("temporary_list");
+    let area = document.getElementById("wordList");
     temporaryList.innerHTML = "";
+    area.innerHTML = "";
+
     var file = new FileReader();
     let nameFile = this.files[0].name;
     let extension = /(\.txt)$/i;
@@ -53,26 +65,6 @@ function readFile(){
 }
 
 document.getElementById('upload_file').addEventListener('change', readFile);
-
-
-
-function generate(){
-    let temporaryList = document.getElementById("temporary_list");
-    if(temporaryList.childElementCount > 0){
-        let childrens = temporaryList.children;
-        let concatToSend = "generate:";
-        for(let i=0; i< childrens.length; i++){
-            let element = childrens[i].lastElementChild.textContent;
-            if(i < childrens.length -1){
-                concatToSend += element+";";
-            }else{
-                concatToSend += element;
-            }
-        }
-        websocket.send(concatToSend);
-    }
-}
-
 
 function getFile(){
     websocket.send("resultGeneration");
