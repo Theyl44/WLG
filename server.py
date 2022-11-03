@@ -23,6 +23,7 @@ class Handler(SimpleHTTPRequestHandler):
                 self.send_response(404)
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
+                print("[INFO] No file result.txt found")
                 return
 
             with open("result.txt", 'rb') as file:

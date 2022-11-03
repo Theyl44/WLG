@@ -48,7 +48,7 @@
                                             <div class="col-md-12">
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" id="typo" name="typo" placeholder="Regular Expression : @#**" aria-label="Typo to use for your words" aria-describedby="add_typo_button">
-                                                    <button class="btn btn-outline-secondary" type="submit"
+                                                    <button class="btn btn-outline-secondary" type="button"
                                                             id="add_typo_button" onclick="addTypo()">
                                                         ADD
                                                     </button>
@@ -108,11 +108,12 @@
                                     <h3>Generate List</h3>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success" style="border-radius: 50%;" id="btn_dl"
-                                        onclick="getFile()" disabled>
-                                        <span class="material-symbols-outlined" style="margin-top: 5px;" id="span_dl">
+                                    <button type="button" class="btn btn-success" style="border-radius: 50%;" id="btn_dl">
+                                        <a href="/result.txt" style="text-outline: none; color: white">
+                                            <span class="material-symbols-outlined" style="margin-top: 5px;" id="span_dl">
                                             file_download
                                         </span>
+                                        </a>
                                     </button>
                                 </div>
                             </div>

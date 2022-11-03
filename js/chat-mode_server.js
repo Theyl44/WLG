@@ -35,6 +35,8 @@ function addTypo(){
         let typoArea = document.getElementById("stored_typo");
         typoArea.value = typoUse;
 
+    }else{
+        console.log("Wrong Typo");
     }
 }
 
@@ -64,10 +66,3 @@ function readFile(){
     file.readAsText(this.files[0]);
 }
 
-document.getElementById('upload_file').addEventListener('change', readFile);
-
-function getFile(){
-    websocket.send("resultGeneration");
-    let btn_dl = document.getElementById("btn_dl");
-    btn_dl.setAttribute("disabled", "true");
-}
