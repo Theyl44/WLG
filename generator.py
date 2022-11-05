@@ -117,8 +117,8 @@ class Generator:
                             new_word_list = self.__add_special_characters(new_word_list)
         return new_word_list
 
-    def steps(self):
-        tab = self.open_file("file.txt")
+    def steps(self, file):
+        tab = self.open_file(file)
         tab = self.__command(tab, self.__typo)
         # tab = add_special_characters(tab)
         # tab = add_number(tab, 2')

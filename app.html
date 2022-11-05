@@ -46,13 +46,17 @@
                                         <br>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" id="typo" name="typo" placeholder="Regular Expression : @#**" aria-label="Typo to use for your words" aria-describedby="add_typo_button">
-                                                    <button class="btn btn-outline-secondary" type="button"
-                                                            id="add_typo_button" onclick="addTypo()">
-                                                        ADD
-                                                    </button>
-                                                </div>
+                                                <form class="needs-validation" novalidate id="formTypo">
+                                                    <div class="input-group mb-3" id="areaTypoValidation">
+                                                        <input type="text" class="form-control" id="typo" name="typo" placeholder="Regular Expression : @#**" aria-label="Typo to use for your words" aria-describedby="add_typo_button">
+                                                        <button class="btn btn-outline-secondary" type="button"
+                                                                id="add_typo_button" onclick="addTypo()">
+                                                            ADD
+                                                        </button>
+                                                        <div id="validationTypo"></div>
+                                                    </div>
+                                                </form>
+
                                             </div>
                                         </div>
                                         <div class="row">
@@ -70,7 +74,9 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" id="wordToAdd" name="wordToAdd" placeholder="Word to add to the list" aria-label="Word to add to the list" aria-describedby="add_word_button">
+                                                    <input type="text" class="form-control" id="wordToAdd" name="wordToAdd"
+                                                           placeholder="Word to add to the list" aria-label="Word to add to the list"
+                                                           aria-describedby="add_word_button">
                                                     <button class="btn btn-outline-secondary" type="button"
                                                             id="add_word_button" onclick="addWord()">
                                                         ADD

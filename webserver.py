@@ -39,7 +39,7 @@ async def generate(message):
         os.remove(generateList)
 
     generatorWords.write_file(file_path=temporaryList, word_list=words)
-    generatorWords.steps()
+    generatorWords.steps("file.txt")
     words = generatorWords.open_file(file_path=generateList)
     for word in words:
         print("word : " + word)

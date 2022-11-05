@@ -71,16 +71,26 @@ class Handler(SimpleHTTPRequestHandler):
             body = self.rfile.read(content_length)
             print(body)
             decodeBody = parseURL.unquote(body.decode('utf-8'))
+
+            # collect typo
             typo = decodeBody.split("&")[0]
             generator.setTypo(typo.split("=")[1])
+
+            # collect list of words
             wordListRequest = decodeBody.split("&")[1].split("=")[1]
+            print("word list request : {0}".format(wordListRequest))
             wordList = wordListRequest.split("\r")
             if wordList.__contains__("\n"):
                 wordList.remove("\n")
+            # remove \n for each element
+            for i in range(0, len(wordList)):
+                wordList[i] = wordList[i].replace("\n", "")
             print(wordList)
-            temporaryList = "tmp.txt"
-            generator.write_file(file_path=temporaryList, word_list=wordList)
-            generator.steps()
+
+            # write in file, the list of words
+            temporaryListFile = "tmp.txt"
+            generator.write_file(file_path=temporaryListFile, word_list=wordList)
+            generator.steps(file=temporaryListFile)
             self.path = "/app.html"
             return SimpleHTTPRequestHandler.do_GET(self)
 
