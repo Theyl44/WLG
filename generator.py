@@ -3,6 +3,7 @@
 class Generator:
     def __init__(self):
         self.__typo = "@#***"
+        self.__result = []
 
     def setTypo(self, typo):
         self.__typo = typo
@@ -56,6 +57,12 @@ class Generator:
     def __print_tab(self, word_list):
         for i in word_list:
             print(i)
+
+    def __set_result(self, word_list):
+        self.__result = word_list
+
+    def get_result(self):
+        return self.__result
 
     # make every combinaison of list1+list2
     def __mix_list(self, list1, list2):
@@ -120,6 +127,7 @@ class Generator:
     def steps(self, file):
         tab = self.open_file(file)
         tab = self.__command(tab, self.__typo)
+        self.__set_result(tab)
         # tab = add_special_characters(tab)
         # tab = add_number(tab, 2')
         # print_tab(tab)

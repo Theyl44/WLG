@@ -92,7 +92,24 @@ class Handler(SimpleHTTPRequestHandler):
             generator.write_file(file_path=temporaryListFile, word_list=wordList)
             generator.steps(file=temporaryListFile)
             self.path = "/app.html"
-            return SimpleHTTPRequestHandler.do_GET(self)
+            fileHtml = open("app.html", 'r', encoding='UTF-8')
+            codeHtml = ""
+            for line in fileHtml:
+                codeHtml += line
+                if line.__contains__('id="generate_list"'):
+                    resultGen = generator.get_result()
+                    for i in range(0, 50):
+                        msg = "<tr><td>"+str((i+1))+"</td><td>"+resultGen.__getitem__(i)+"</td></tr>"
+                        codeHtml += msg
+
+            # codeHtml = fileHtml.read()
+            fileHtml.close()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html")
+            self.end_headers()
+            self.wfile.write(bytes(codeHtml, 'utf-8'))
+            # return SimpleHTTPRequestHandler.do_GET(self)
+
 
     def do_PUT(self):
         filename = os.path.basename(self.path)
