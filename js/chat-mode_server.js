@@ -36,7 +36,7 @@ function addWordToList(word){
 function addWordToSession(word){
     if(sessionStorage.getItem("words") == null){
         sessionStorage.setItem("words", JSON.stringify(""));
-        let array_word = []
+        let array_word = [];
         array_word.push(word);
         sessionStorage.setItem("words", JSON.stringify(array_word));
     }else{
@@ -103,6 +103,8 @@ function validTypo(typoWord, isValid, inputTypo) {
     }
     divTypo.innerText = typoWord;
 }
+document.getElementById('upload_file').addEventListener('change', readFile);
+
 
 // read file and check the extension
 function readFile(){
@@ -112,7 +114,10 @@ function readFile(){
     area.innerHTML = "";
 
     //clean session Storage
-    sessionStorage.setItem("words", "");
+    if(sessionStorage.getItem("words") != null){
+        let tab = [];
+        sessionStorage.setItem("words", JSON.stringify(tab));
+    }
 
     var file = new FileReader();
     let nameFile = this.files[0].name;
@@ -132,4 +137,3 @@ function readFile(){
 
     file.readAsText(this.files[0]);
 }
-

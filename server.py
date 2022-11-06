@@ -101,14 +101,11 @@ class Handler(SimpleHTTPRequestHandler):
                     for i in range(0, 50):
                         msg = "<tr><td>"+str((i+1))+"</td><td>"+resultGen.__getitem__(i)+"</td></tr>"
                         codeHtml += msg
-
-            # codeHtml = fileHtml.read()
             fileHtml.close()
             self.send_response(200)
             self.send_header("Content-Type", "text/html")
             self.end_headers()
             self.wfile.write(bytes(codeHtml, 'utf-8'))
-            # return SimpleHTTPRequestHandler.do_GET(self)
 
 
     def do_PUT(self):
