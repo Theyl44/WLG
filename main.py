@@ -110,11 +110,44 @@ def command(word_list, command):
     return new_word_list
 
 
+def add_tranformation(word_list):
+    new_word_list = []
+    transformations = [
+        {'a': ['@', '4']},
+        {'b': '8'},
+        {'e': '3'},
+        {'g': ['9', '6']},
+        {'i': ['1', '!']},
+        {'o': '0'},
+        {'s': ['$', '5']},
+        {'t': '7'}
+    ]
+    check = 0
+    for word in word_list:
+        new_word_list.append(word)
+        for item in transformations :
+            for key in item:
+                for elem in item[key]:
+                    x = word.replace(key, elem, 1)
+                    if x not in word_list and x not in new_word_list:
+                        check = 1
+                        new_word_list.append(x)
+                        print(x)
+
+    if check == 1:
+        temp = add_tranformation(new_word_list)
+        return temp
+    else:
+        return word_list
+
+
+
 def steps():
     tab = open_file("file.txt")
-    tab = command(tab, "##@@")
+    #    tab = command(tab, "##@@")
     # tab = add_special_characters(tab)
     # tab = add_number(tab, 2')
+    tab = add_tranformation(tab)
     # print_tab(tab)
     write_file("result.txt", tab)
 
