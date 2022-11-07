@@ -1,6 +1,5 @@
 function checkSession(){
     let wordListString = sessionStorage.getItem("words");
-
     let typo = sessionStorage.getItem("typo");
     if(typo != null && typo !== ""){
         console.log("Typo : "+typo);
@@ -19,8 +18,6 @@ function checkSession(){
 }
 
 checkSession();
-
-
 
 function addWordToList(word){
     let temporaryTableList = document.getElementById("temporary_list");
