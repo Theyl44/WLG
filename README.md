@@ -28,6 +28,4 @@ le serveur
     L'url s'affiche dans la console. On peut donc ajouter l'url dans un navigateur par la suite
 
     Le download est possible avec cette méthode
-
-    Inconvénients : Pas d'affichage continue des listes lors de la génération et lors du résultat
 </p>
