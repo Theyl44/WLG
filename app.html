@@ -46,6 +46,17 @@
                                         <br>
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <form method="post" action="/?act=applyTransformation" id="formTransformation">
+                                                    <div class="from-check">
+                                                        <input type="checkbox" class="form-check-input" id="validTransfo" name="validTransfo">
+                                                        <label for="validTransfo">Active transformation</label>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <form class="needs-validation" novalidate id="formTypo">
                                                     <div class="input-group mb-3" id="areaTypoValidation">
                                                         <input type="text" class="form-control" id="typo" name="typo" placeholder="Regular Expression : @#**" aria-label="Typo to use for your words" aria-describedby="add_typo_button">

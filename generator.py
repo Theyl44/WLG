@@ -84,7 +84,7 @@ class Generator:
         bool = -1
 
         for index in range(len(command)):
-            if bool == -1 or index > bool:
+            if bool == -1 and index > bool:
                 char = command[index]
                 # recc is the number of following reccurence
                 recc = 1
@@ -124,10 +124,40 @@ class Generator:
                             new_word_list = self.__add_special_characters(new_word_list)
         return new_word_list
 
+    def add_tranformation(self, word_list):
+        new_word_list = []
+        transformations = [
+            {'a': ['@', '4']},
+            {'b': '8'},
+            {'e': '3'},
+            {'g': ['9', '6']},
+            {'i': ['1', '!']},
+            {'o': '0'},
+            {'s': ['$', '5']},
+            {'t': '7'}
+        ]
+        check = 0
+        for word in word_list:
+            new_word_list.append(word)
+            for item in transformations:
+                for key in item:
+                    for elem in item[key]:
+                        x = word.replace(key, elem, 1)
+                        if x not in word_list and x not in new_word_list:
+                            check = 1
+                            new_word_list.append(x)
+
+        if check == 1:
+            temp = self.add_tranformation(new_word_list)
+            return temp
+        else:
+            return word_list
+
     def steps(self, file):
         tab = self.open_file(file)
         tab = self.__command(tab, self.__typo)
         self.__set_result(tab)
+        # tab = add_tranformation(tab)
         # tab = add_special_characters(tab)
         # tab = add_number(tab, 2')
         # print_tab(tab)
