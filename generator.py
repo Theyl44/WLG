@@ -84,10 +84,11 @@ class Generator:
         bool = -1
 
         for index in range(len(command)):
+            recc = 1
             if bool == -1 and index > bool:
                 char = command[index]
                 # recc is the number of following reccurence
-                recc = 1
+                # recc = 1
                 if index + 1 <= len(command) - 1:
                     while char == command[index + 1]:
                         recc += 1
@@ -152,6 +153,16 @@ class Generator:
             return temp
         else:
             return word_list
+
+    def print_help():
+        print("Utilisation : ./main.py [_input.txt] [OPTIONS]")
+        print("\t -c  'COMMAND': Appliquer la commande COMMAND a la liste de mot")
+        print("\t -t : transformation des mots de la liste")
+        print("\t -o file.txt : export la liste de mot dans file.txt")
+        print("-------")
+
+        print(
+            "Utilisation des commandes\n# = word\n* = digit\n@ = special characters\nExample : '#@****' = for each word in the word list add a special character and four digit")
 
     def steps(self, file):
         tab = self.open_file(file)

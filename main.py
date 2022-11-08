@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+import sys
+import os.path
+
+
 def open_file(file_path):
     array = []
     f = open(file_path, "r")
@@ -45,7 +50,8 @@ def add_special_characters(word_list):
 
 def print_tab(word_list):
     for i in word_list:
-        print(i)
+        print(i, end="\t")
+    print("\n#" + str(len(word_list)))
 
 
 # make every combinaison of list1+list2
@@ -69,10 +75,11 @@ def command(word_list, command):
     bool = -1
 
     for index in range(len(command)):
-        if bool == -1 or index > bool:
+        recc = 1
+        if bool == -1 and index > bool:
             char = command[index]
             # recc is the number of following reccurence
-            recc = 1
+            # recc = 1
             if index + 1 <= len(command) - 1:
                 while char == command[index + 1]:
                     recc += 1
@@ -113,9 +120,9 @@ def command(word_list, command):
 def add_tranformation(word_list):
     new_word_list = []
     transformations = [
-        {'a': ['@', '4']},
+        {'a': ['@', '4', 'A']},
         {'b': '8'},
-        {'e': '3'},
+        {'e': ['3', 'E']},
         {'g': ['9', '6']},
         {'i': ['1', '!']},
         {'o': '0'},
@@ -125,14 +132,13 @@ def add_tranformation(word_list):
     check = 0
     for word in word_list:
         new_word_list.append(word)
-        for item in transformations :
+        for item in transformations:
             for key in item:
                 for elem in item[key]:
                     x = word.replace(key, elem, 1)
                     if x not in word_list and x not in new_word_list:
                         check = 1
                         new_word_list.append(x)
-                        print(x)
 
     if check == 1:
         temp = add_tranformation(new_word_list)
@@ -141,10 +147,9 @@ def add_tranformation(word_list):
         return word_list
 
 
-
 def steps():
     tab = open_file("file.txt")
-    #    tab = command(tab, "##@@")
+    # tab = command(tab, "#@")
     # tab = add_special_characters(tab)
     # tab = add_number(tab, 2')
     tab = add_tranformation(tab)
@@ -152,5 +157,40 @@ def steps():
     write_file("result.txt", tab)
 
 
+def print_help():
+    print("Utilisation : ./main.py [_input.txt] [OPTIONS]")
+    print("\t -c  'COMMAND': Appliquer la commande COMMAND a la liste de mot")
+    print("\t -t : transformation des mots de la liste")
+    print("\t -o file.txt : export la liste de mot dans file.txt")
+    print("-------")
+
+    print("Utilisation des commandes\n# = word\n* = digit\n@ = special characters\nExample : '#@****' = for each word in the word list add a special character and four digit")
+
+
+def main(argv):
+    if len(argv) == 1:
+        print_help()
+    if len(argv) > 2:
+        if os.path.isfile(argv[1]):
+            tab = open_file(argv[1])
+        else:
+            print("error give a valid name")
+            return 0
+        if '-t' in argv:
+            tab = add_tranformation(tab)
+
+        if '-c' in argv:
+            index = sys.argv.index('-c')
+            if index + 1 <= len(argv):
+                tab = command(tab, argv[index + 1])
+        if '-o' in argv:
+            index = sys.argv.index('-o')
+            if index + 1 <= len(argv):
+                write_file(argv[index + 1], tab)
+        else:
+            print_tab(tab)
+
+
 if __name__ == '__main__':
-    steps()
+    # steps()
+    main(sys.argv)
