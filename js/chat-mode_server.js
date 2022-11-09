@@ -201,6 +201,16 @@ function readFile(){
 
 document.getElementById('validTransfo').addEventListener('change', addTransformation);
 
+function isEmpty(element){
+    let empty = false;
+    if(element.value === "" || element.value === "\n"){
+        empty = true;
+        console.log("Is empty");
+    }
+    return empty;
+}
+
+
 function addTransformation(){
     let valueTransfo = document.getElementById("validTransfo").checked;
     if(valueTransfo){
@@ -208,8 +218,11 @@ function addTransformation(){
         //avant de submit, on ajoute la liste des mots a transformer
         let formTransfo = document.getElementById('formTransformation');
         let element = document.getElementById("wordList");
-        formTransfo.insertAdjacentElement('beforeend', element);
-        formTransfo.submit();
+        //check if element is empty or not
+        if(!isEmpty(element)){
+            formTransfo.insertAdjacentElement('beforeend', element);
+            formTransfo.submit();
+        }
     }else{
         console.log("Transformation removed");
         sessionStorage.setItem("transformate", "false");
