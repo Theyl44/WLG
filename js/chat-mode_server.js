@@ -230,3 +230,11 @@ function addTransformation(){
         checkSession();
     }
 }
+
+function generation(){
+    //clear session storage
+    if(sessionStorage.getItem("words") != null){
+        let tab = [];
+        sessionStorage.setItem("words", JSON.stringify(tab));
+    }
+}

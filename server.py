@@ -5,6 +5,8 @@ from generator import Generator
 import urllib.parse as parseURL
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
+# hostname = "0.0.0.0"
+# port = 80
 hostname = "localhost"
 port = 8080
 generator = Generator()
@@ -51,23 +53,17 @@ class Handler(SimpleHTTPRequestHandler):
             return SimpleHTTPRequestHandler.do_GET(self)
 
     def do_POST(self):
-        print("path : ", self.path)
         if self.path == "/?act=addTypo":
-            print("headers : ", self.headers)
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            print(body)
             typo = body.decode('utf-8').split("=")[1]
-            print(typo)
             generator.setTypo(typo)
             self.path = "/app.html"
             return SimpleHTTPRequestHandler.do_GET(self)
 
         elif self.path == "/?act=generateList":
-            print("headers : ", self.headers)
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            print(body)
             decodeBody = parseURL.unquote(body.decode('utf-8'))
 
             # collect typo
@@ -76,9 +72,7 @@ class Handler(SimpleHTTPRequestHandler):
 
             # collect list of words
             wordListRequest = decodeBody.split("&")[1].split("=")[1]
-            print("word list request : {0}".format(wordListRequest))
             wordList = self.parseWordlist(wordListRequest)
-            print(wordList)
 
             # write in file, the list of words
             temporaryListFile = "tmp.txt"
@@ -101,16 +95,12 @@ class Handler(SimpleHTTPRequestHandler):
             self.wfile.write(bytes(codeHtml, 'utf-8'))
 
         elif self.path == "/?act=applyTransformation":
-            print("headers : ", self.headers)
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            print(body)
             decodeBody = parseURL.unquote(body.decode('utf-8'))
-            print(decodeBody)
             wordListRequest = decodeBody.split("&")[1].split("=")[1]
 
             wordList = self.parseWordlist(wordListRequest)
-            print(wordList)
 
             transformWordList = generator.add_tranformation(word_list=wordList)
 
@@ -121,7 +111,6 @@ class Handler(SimpleHTTPRequestHandler):
                 codeHtml += line
                 if line.__contains__('id="temporary_list"'):
                     for i in range(0, len(transformWordList)):
-                        print(transformWordList[i])
                         msg = "<tr><td>" + str((i + 1)) + "</td><td>" + str(transformWordList[i]) + "</td></tr>"
                         codeHtml += msg
             fileHtml.close()
