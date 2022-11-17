@@ -75,11 +75,11 @@ def command(word_list, command):
     bool = -1
 
     for index in range(len(command)):
-        # recc = 1
+        recc = 1
         if bool == -1 and index > bool:
             char = command[index]
             # recc is the number of following reccurence
-            recc = 1
+            # recc = 1
             if index + 1 <= len(command) - 1:
                 while char == command[index + 1]:
                     recc += 1
