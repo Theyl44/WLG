@@ -84,11 +84,10 @@ class Generator:
         bool = -1
 
         for index in range(len(command)):
-            recc = 1
-            if bool == -1 and index > bool:
+            if bool == -1 or index > bool:
                 char = command[index]
                 # recc is the number of following reccurence
-                # recc = 1
+                recc = 1
                 if index + 1 <= len(command) - 1:
                     while char == command[index + 1]:
                         recc += 1
@@ -154,7 +153,7 @@ class Generator:
         else:
             return word_list
 
-    def print_help():
+    def print_help(self):
         print("Utilisation : ./main.py [_input.txt] [OPTIONS]")
         print("\t -c  'COMMAND': Appliquer la commande COMMAND a la liste de mot")
         print("\t -t : transformation des mots de la liste")

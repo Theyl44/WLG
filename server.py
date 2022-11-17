@@ -13,6 +13,11 @@ generator = Generator()
 
 
 class Handler(SimpleHTTPRequestHandler):
+    def min(self, var1, var2):
+        if int(var1) < int(var2):
+            return var1
+        return var2
+
     def do_GET(self):
 
         if self.path == "/result.txt":
@@ -65,10 +70,9 @@ class Handler(SimpleHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
             decodeBody = parseURL.unquote(body.decode('utf-8'))
-
             # collect typo
             typo = decodeBody.split("&")[0]
-            generator.setTypo(typo.split("=")[1])
+            generator.setTypo("'"+typo.split("=")[1]+"'")
 
             # collect list of words
             wordListRequest = decodeBody.split("&")[1].split("=")[1]
@@ -85,8 +89,9 @@ class Handler(SimpleHTTPRequestHandler):
                 codeHtml += line
                 if line.__contains__('id="generate_list"'):
                     resultGen = generator.get_result()
-                    for i in range(0, 50):
-                        msg = "<tr><td>" + str((i + 1)) + "</td><td>" + resultGen.__getitem__(i) + "</td></tr>"
+                    length_result = len(resultGen)
+                    for i in range(0, min(length_result, 50)):
+                        msg = "<tr><td>" + str((i + 1)) + "</td><td>" + str(resultGen[i]) + "</td></tr>"
                         codeHtml += msg
             fileHtml.close()
             self.send_response(200)

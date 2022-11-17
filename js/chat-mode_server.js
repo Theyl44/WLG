@@ -123,7 +123,7 @@ function addTypo(){
     if(typoUse !== "" && typoUse.match(regexp)){
         console.log("Typo isn't empty");
         let typoArea = document.getElementById("stored_typo");
-        typoArea.value = typoUse;
+        typoArea.value = "'"+typoUse+"'";
         //add typo to sessionStorage and print it to the user on the web page
         sessionStorage.setItem("typo", typoUse);
         validTypo(typoUse, true, typo);
@@ -212,8 +212,15 @@ function isEmpty(element){
 
 
 function addTransformation(){
+    //verif si liste non vide
+    let wordListString = sessionStorage.getItem("words");
+    let liste_not_empty = true;
+    if(wordListString == null || wordListString === "[]"){
+        liste_not_empty = false;
+    }
+
     let valueTransfo = document.getElementById("validTransfo").checked;
-    if(valueTransfo){
+    if(valueTransfo && liste_not_empty){
         sessionStorage.setItem("transformate", "true");
         //avant de submit, on ajoute la liste des mots a transformer
         let formTransfo = document.getElementById('formTransformation');
@@ -236,5 +243,6 @@ function generation(){
     if(sessionStorage.getItem("words") != null){
         let tab = [];
         sessionStorage.setItem("words", JSON.stringify(tab));
+        sessionStorage.setItem("transformate", "false");
     }
 }
