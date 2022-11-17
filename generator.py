@@ -84,10 +84,10 @@ class Generator:
         bool = -1
 
         for index in range(len(command)):
-            if bool == -1 or index > bool:
+            if bool == -1 and index > bool:
                 char = command[index]
                 # recc is the number of following reccurence
-                recc = 1
+                # recc = 1
                 if index + 1 <= len(command) - 1:
                     while char == command[index + 1]:
                         recc += 1
