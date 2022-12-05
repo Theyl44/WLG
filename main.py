@@ -149,10 +149,10 @@ def add_tranformation(word_list):
 
 def steps():
     tab = open_file("file.txt")
-    # tab = command(tab, "#@")
+    tab = command(tab, "##@@")
     # tab = add_special_characters(tab)
     # tab = add_number(tab, 2')
-    tab = add_tranformation(tab)
+    # tab = add_tranformation(tab)
     # print_tab(tab)
     write_file("result.txt", tab)
 
@@ -192,5 +192,5 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    # steps()
-    main(sys.argv)
+    steps()
+    # main(sys.argv)
