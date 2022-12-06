@@ -123,7 +123,7 @@ function addTypo(){
     if(typoUse !== "" && typoUse.match(regexp)){
         console.log("Typo isn't empty");
         let typoArea = document.getElementById("stored_typo");
-        typoArea.value = "'"+typoUse+"'";
+        typoArea.value = typoUse;
         //add typo to sessionStorage and print it to the user on the web page
         sessionStorage.setItem("typo", typoUse);
         validTypo(typoUse, true, typo);

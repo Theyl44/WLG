@@ -84,44 +84,25 @@ class Generator:
         bool = -1
 
         for index in range(len(command)):
-            if bool == -1 and index > bool:
-                char = command[index]
-                # recc is the number of following reccurence
-                # recc = 1
-                if index + 1 <= len(command) - 1:
-                    while char == command[index + 1]:
-                        recc += 1
-                        bool = recc
-                        if index + 1 >= len(command) - 1:
-                            break
-                        else:
-                            index += 1
-                if char == "#":
-                    if new_word_list == []:
-                        new_word_list = word_list
-                        recc -= 1
-                    if recc == 1:
-                        new_word_list = self.__mix_list(new_word_list, word_list)
-                    elif recc > 0:
-                        for i in range(recc):
-                            new_word_list = self.__mix_list(new_word_list, word_list)
-                if char == "*":
-                    if new_word_list == []:
-                        new_word_list = digi_tab
-                        recc -= 1
-                    if recc == 1:
-                        new_word_list = self.__add_number(new_word_list, 1)
-                    elif recc > 0:
-                        new_word_list = self.__add_number(new_word_list, recc)
-                if char == "@":
-                    if new_word_list == []:
-                        new_word_list = special_characters_tab
-                        recc -= 1
-                    if recc == 1:
-                        new_word_list = self.__add_special_characters(new_word_list)
-                    elif recc > 0:
-                        for i in range(recc - 1):
-                            new_word_list = self.__add_special_characters(new_word_list)
+
+            char = command[index]
+            if char == "#":
+                if new_word_list == []:
+                    new_word_list = word_list
+                else:
+                    new_word_list = self.__mix_list(new_word_list, word_list)
+            if char == "*":
+                if new_word_list == []:
+                    new_word_list = digi_tab
+                else:
+                    new_word_list = self.__add_number(new_word_list, 1)
+
+            if char == "@":
+                if new_word_list == []:
+                    new_word_list = special_characters_tab
+                else:
+                    new_word_list = self.__add_special_characters(new_word_list)
+
         return new_word_list
 
     def add_tranformation(self, word_list):
