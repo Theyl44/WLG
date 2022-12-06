@@ -5,10 +5,10 @@ from generator import Generator
 import urllib.parse as parseURL
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-# hostname = "0.0.0.0"
-# port = 80
-hostname = "localhost"
-port = 8080
+hostname = "0.0.0.0"
+port = 80
+# hostname = "localhost"
+# port = 8080
 generator = Generator()
 
 
