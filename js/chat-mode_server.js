@@ -120,7 +120,7 @@ function addTypo(){
     let typo = document.getElementById("typo");
     let typoUse = typo.value;
     let regexp = /^[#\*@]{1,}$/;
-    if(typoUse !== "" && typoUse.match(regexp)){
+    if(typoUse !== "" && typoUse.match(regexp) && isAValidTypo(typoUse)){
         console.log("Typo isn't empty");
         let typoArea = document.getElementById("stored_typo");
         typoArea.value = typoUse;
@@ -132,6 +132,18 @@ function addTypo(){
         validTypo(typoUse, false, typo);
     }
     typo.value = "";
+}
+
+function isAValidTypo(typoWord){
+    console.log("Typo : "+typoWord);
+    let typoLength = typoWord.length;
+    let number_of_hashT = 0;
+    for(let i=0; i<typoLength;i++){
+        if (typoWord[i] === "#"){
+            number_of_hashT++;
+        }
+    }
+    return number_of_hashT <= 2;
 }
 
 /**

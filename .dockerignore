@@ -4,3 +4,7 @@ venv
 .idea
 main.py
 index.html
+run_docker.sh
+test.txt
+result.txt
+build_image_docker.sh
