@@ -1,1 +1,1 @@
-docker run -d -p 8080:80 wlg_light
+docker run -d -p 8080:80 saltas44/wlg_light
