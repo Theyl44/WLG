@@ -19,7 +19,7 @@ video de présentation du projet
 
     exemple de code
 
-<h3>Docker</h3>
+<h3>Script Shell</h3>
 <p>
     Le programme est récupérable via Docker sous le nom <strong>saltas44/wlg_light:latest</strong>.
     
@@ -30,6 +30,7 @@ video de présentation du projet
         
     Vous pouvez ainsi accéder au site via http://localhost:8080 sur votre machine.
 </p>
+<h5>Shell</h5>
 <p>
     Il est aussi possible d'utiliser les scripts shell adaptés pour wlg_light disponible dans le dossier shell.
     
