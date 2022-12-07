@@ -11,7 +11,9 @@ Exemple : dans le cas de l'entreprise "ISEN", nous souhaitons générer une list
 
 
 <h2>Video de présentation du projet</h2>
-![Presentation WLG](./presentation_WLG.mkv)
+
+https://user-images.githubusercontent.com/61002169/206292804-0a3049af-56d0-458c-bb7a-aa044d2e269b.mp4
+
 
 
 <h2>Transformation</h2>
