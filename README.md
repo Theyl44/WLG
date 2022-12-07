@@ -5,8 +5,8 @@
 <h2>Présentation</h2>
 
 <p>
-Il est souvent utile de créer des dictionnaires de mots lorsqu’on souhaite bruteforce un mot de passe ou vérifier les différentes url disponibles sur un site.La liste d’origine peut contenir (mot, prénom, nom, numéro, adresse, date_naissance,etc). L’objectif est d’automatiser la chose pour gagner du temps et créer des listes qui correspondent à des cas particuliers. 
-Exemple : Dans le cas d’un pentest de l’isen ouest, nous souhaitons générer une liste de mot de passe (isen2018, isen2022, 1s3n2018, 1s3n2022, …)
+Ce projet est à la destination des personnes qui se retrouvent dans la situation où ils doivent créer une liste de mots. Pour brute force un mot de passe ou vérifier les différents URL disponibles sur un site. La liste d’origine peut contenir (mot, prénom, nom, numéro, adresse, date de naissance, etc.). L’objectif est d’automatiser la chose pour gagner du temps et créer des listes qui correspondent à des cas particuliers.
+Exemple : dans le cas de l'entreprise "ISEN", nous souhaitons générer une liste de mots de passe telle que : isen2018, isen2022, 1s3n2018, 1s3n2022,…
 </p>
 
 
@@ -14,17 +14,30 @@ video de présentation du projet
 
 
 <h2>Transformation</h2>
+
+<p>Nous avons implémenté les transformations suivantes : </p>
 <p align="center"><img style="width:3
 200px;" src="img/transfo_image.jpg" /></p>
 
 <h3>Ligne de commande</h3>
 <p>
-    On peut se servir de ce programme en ligne de comme 
+Utilisation : 
+
+    ./main.py [_input.txt] [OPTIONS]
+         -t : transformation des mots de la liste
+         -o file.txt : export la liste de mot dans file.txt
+         -c  'COMMAND': Appliquer la commande COMMAND a la liste de mot
+            # = word
+            * = digit
+            @ = special characters
+    
+
+    Example : ./main.py test.txt -c '#***' 
+    Pour chaque mot de la liste test.txt, ajouter un caractère spécial et quatre chiffres
 </p>
 
-    exemple de code
 
-<h3>Script Shell</h3>
+<h3>Docker</h3>
 <p>
     Le programme est récupérable via Docker sous le nom <strong>saltas44/wlg_light:latest</strong>.
     
