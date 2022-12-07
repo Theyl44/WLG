@@ -34,6 +34,7 @@ le serveur
 <h3>Script Shell</h3>
 <p>
     Le programme est récupérable via Docker sous le nom <strong>saltas44/wlg_light:latest</strong>.
+    
     Pour se faire :
         docker pull saltas44/wlg_light:latest
     Puis pour lancer ce container :
@@ -43,6 +44,7 @@ le serveur
 </p>
 <p>
     Il est aussi possible d'utiliser les scripts shell disponible dans le dossier shell.
+    
     Voici la liste des scripts disponibles :
         - get_docker.sh
             --> Equivalent au docker pull du projet
