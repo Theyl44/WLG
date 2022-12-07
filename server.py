@@ -144,13 +144,19 @@ class Handler(SimpleHTTPRequestHandler):
             return
 
 
-web_server = HTTPServer((hostname, port), Handler)
-print("Server start on http://{0}:{1}\n".format(hostname, port))
+def main():
 
-try:
-    web_server.serve_forever()
-except KeyboardInterrupt:
-    pass
+    web_server = HTTPServer((hostname, port), Handler)
+    print("Server start on http://{0}:{1}\n".format(hostname, port))
 
-web_server.server_close()
-print("Server stopped")
+    try:
+        web_server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+
+    web_server.server_close()
+    print("Server stopped")
+
+
+if __name__ == "__main__":
+    main()
