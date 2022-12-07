@@ -43,7 +43,7 @@ le serveur
     Vous pouvez ainsi accéder au site via http://localhost:8080 sur votre machine.
 </p>
 <p>
-    Il est aussi possible d'utiliser les scripts shell disponible dans le dossier shell.
+    Il est aussi possible d'utiliser les scripts shell adaptés pour wlg_light disponible dans le dossier shell.
     
     Voici la liste des scripts disponibles :
         - get_docker.sh
@@ -52,6 +52,9 @@ le serveur
             --> Equivalent a faire un docker run
         - stop_docker.sh
             --> Stop le docker du wlg_light grâce à son ID de container
-            
+    
+    Exemple : ./get_docker.sh
+              ./run_docker.sh
+              ./stop_docker.sh
     Accéder ensuite au site via http://localhost:8080 sur votre machine.
 </p>
