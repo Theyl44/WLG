@@ -23,7 +23,7 @@
                                     <form method="POST" action="/?act=generateList">
                                         <input type="text" id="stored_typo" name="stored_typo" hidden>
                                         <textarea id="wordList" name="wordList" hidden></textarea>
-                                        <button type="submit" class="btn btn-success" style="border-radius: 50%;">
+                                        <button type="submit" class="btn btn-success" style="border-radius: 50%;" onclick="generation()">
                                             <span class="material-symbols-outlined" style="margin-top: 5px">play_arrow</span>
                                         </button>
                                     </form>
@@ -41,6 +41,17 @@
                                                 <div class="input-group">
                                                     <input type="file" class="form-control" id="upload_file" aria-label="Upload">
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <form method="post" action="/?act=applyTransformation" id="formTransformation">
+                                                    <div class="from-check">
+                                                        <input type="checkbox" class="form-check-input" id="validTransfo" name="validTransfo">
+                                                        <label for="validTransfo">Active transformation</label>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                         <br>

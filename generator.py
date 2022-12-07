@@ -84,50 +84,71 @@ class Generator:
         bool = -1
 
         for index in range(len(command)):
-            if bool == -1 or index > bool:
-                char = command[index]
-                # recc is the number of following reccurence
-                recc = 1
-                if index + 1 <= len(command) - 1:
-                    while char == command[index + 1]:
-                        recc += 1
-                        bool = recc
-                        if index + 1 >= len(command) - 1:
-                            break
-                        else:
-                            index += 1
-                if char == "#":
-                    if new_word_list == []:
-                        new_word_list = word_list
-                        recc -= 1
-                    if recc == 1:
-                        new_word_list = self.__mix_list(new_word_list, word_list)
-                    elif recc > 0:
-                        for i in range(recc):
-                            new_word_list = self.__mix_list(new_word_list, word_list)
-                if char == "*":
-                    if new_word_list == []:
-                        new_word_list = digi_tab
-                        recc -= 1
-                    if recc == 1:
-                        new_word_list = self.__add_number(new_word_list, 1)
-                    elif recc > 0:
-                        new_word_list = self.__add_number(new_word_list, recc)
-                if char == "@":
-                    if new_word_list == []:
-                        new_word_list = special_characters_tab
-                        recc -= 1
-                    if recc == 1:
-                        new_word_list = self.__add_special_characters(new_word_list)
-                    elif recc > 0:
-                        for i in range(recc - 1):
-                            new_word_list = self.__add_special_characters(new_word_list)
+
+            char = command[index]
+            if char == "#":
+                if new_word_list == []:
+                    new_word_list = word_list
+                else:
+                    new_word_list = self.__mix_list(new_word_list, word_list)
+            if char == "*":
+                if new_word_list == []:
+                    new_word_list = digi_tab
+                else:
+                    new_word_list = self.__add_number(new_word_list, 1)
+
+            if char == "@":
+                if new_word_list == []:
+                    new_word_list = special_characters_tab
+                else:
+                    new_word_list = self.__add_special_characters(new_word_list)
+
         return new_word_list
+
+    def add_tranformation(self, word_list):
+        new_word_list = []
+        transformations = [
+            {'a': ['@', '4']},
+            {'b': '8'},
+            {'e': '3'},
+            {'g': ['9', '6']},
+            {'i': ['1', '!']},
+            {'o': '0'},
+            {'s': ['$', '5']},
+            {'t': '7'}
+        ]
+        check = 0
+        for word in word_list:
+            new_word_list.append(word)
+            for item in transformations:
+                for key in item:
+                    for elem in item[key]:
+                        x = word.replace(key, elem, 1)
+                        if x not in word_list and x not in new_word_list:
+                            check = 1
+                            new_word_list.append(x)
+
+        if check == 1:
+            temp = self.add_tranformation(new_word_list)
+            return temp
+        else:
+            return word_list
+
+    def print_help(self):
+        print("Utilisation : ./main.py [_input.txt] [OPTIONS]")
+        print("\t -c  'COMMAND': Appliquer la commande COMMAND a la liste de mot")
+        print("\t -t : transformation des mots de la liste")
+        print("\t -o file.txt : export la liste de mot dans file.txt")
+        print("-------")
+
+        print(
+            "Utilisation des commandes\n# = word\n* = digit\n@ = special characters\nExample : '#@****' = for each word in the word list add a special character and four digit")
 
     def steps(self, file):
         tab = self.open_file(file)
         tab = self.__command(tab, self.__typo)
         self.__set_result(tab)
+        # tab = add_tranformation(tab)
         # tab = add_special_characters(tab)
         # tab = add_number(tab, 2')
         # print_tab(tab)

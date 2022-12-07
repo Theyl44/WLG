@@ -1,7 +1,10 @@
+/**
+ * Check the current session & search for typo and words save in session storage
+ */
 function checkSession(){
     let wordListString = sessionStorage.getItem("words");
-
     let typo = sessionStorage.getItem("typo");
+    let checkTransformation = sessionStorage.getItem("transformate");
     if(typo != null && typo !== ""){
         console.log("Typo : "+typo);
         let typoArea = document.getElementById("stored_typo");
@@ -9,19 +12,53 @@ function checkSession(){
         //ajout dans le valid feedback
         validTypo(typo, true, document.getElementById("areaTypoValidation"));
     }
-
-    if(wordListString != null && wordListString !== ""){
-        let wordList = JSON.parse(wordListString);
-        for(let i=0; i<wordList.length; i++){
-            addWordToList(wordList[i]);
+    if(checkTransformation != null){
+        if(checkTransformation === "false"){
+            document.getElementById("validTransfo").checked = false;
+        }else if(checkTransformation === "true"){
+            document.getElementById("validTransfo").checked = true;
         }
     }
-}
 
+    if(wordListString != null && wordListString !== ""){
+        if(document.getElementById("validTransfo").checked === true){
+            //add in the hidden element
+            //get the current table
+            let list = document.getElementById("temporary_list");
+            if(list.childElementCount > 0) {
+                let childrens = list.children;
+                for (let i = 0; i < childrens.length; i++) {
+                    let miniChilds = childrens[i];
+                    if(miniChilds.childElementCount > 0){
+                        let element = miniChilds.lastElementChild.textContent;
+                        console.log("element : "+element);
+                        addWordToHiddenList(element);
+                    }
+                }
+            }
+        }else{
+            //clean acutal temporary list
+            let area = document.getElementById("wordList");
+            area.value = "";
+
+            let tempo = document.getElementById("temporary_list");
+            tempo.innerHTML = "";
+
+            let wordList = JSON.parse(wordListString);
+            for(let i=0; i<wordList.length; i++){
+                addWordToList(wordList[i]);
+            }
+        }
+    }
+
+
+}
 checkSession();
 
-
-
+/**
+ * add a word to the temporary-list, before the generation
+ * @param word
+ */
 function addWordToList(word){
     let temporaryTableList = document.getElementById("temporary_list");
     let newNumber = temporaryTableList.childElementCount + 1;
@@ -29,10 +66,19 @@ function addWordToList(word){
     temporaryTableList.insertAdjacentHTML("beforeend", element);
 
     //------V2-------
+    addWordToHiddenList(word);
+}
+
+function addWordToHiddenList(word){
     let area = document.getElementById("wordList");
     area.value += word+"\n";
 }
 
+
+/**
+ * Like addWordToList, it add a word in the list contains in the session storage
+ * @param word
+ */
 function addWordToSession(word){
     if(sessionStorage.getItem("words") == null){
         sessionStorage.setItem("words", JSON.stringify(""));
@@ -48,7 +94,9 @@ function addWordToSession(word){
 }
 
 
-//add a word to the temporary list
+/**
+ * Function activated when clicking on Add a word or while reading words contains in a file
+ */
 function addWord(){
     let wordToAddArea = document.getElementById("wordToAdd");
     let wordToAdd = wordToAddArea.value;
@@ -60,6 +108,9 @@ function addWord(){
 
 }
 
+/**
+ * function activated when you want to valid your typo for generation
+ */
 function addTypo(){
     //clean typo
     let form = document.getElementById("formTypo");
@@ -69,7 +120,7 @@ function addTypo(){
     let typo = document.getElementById("typo");
     let typoUse = typo.value;
     let regexp = /^[#\*@]{1,}$/;
-    if(typoUse !== "" && typoUse.match(regexp)){
+    if(typoUse !== "" && typoUse.match(regexp) && isAValidTypo(typoUse)){
         console.log("Typo isn't empty");
         let typoArea = document.getElementById("stored_typo");
         typoArea.value = typoUse;
@@ -83,6 +134,24 @@ function addTypo(){
     typo.value = "";
 }
 
+function isAValidTypo(typoWord){
+    console.log("Typo : "+typoWord);
+    let typoLength = typoWord.length;
+    let number_of_hashT = 0;
+    for(let i=0; i<typoLength;i++){
+        if (typoWord[i] === "#"){
+            number_of_hashT++;
+        }
+    }
+    return number_of_hashT <= 2;
+}
+
+/**
+ * Check if the typo is valid, respect the typo used in the server
+ * @param typoWord
+ * @param isValid
+ * @param inputTypo
+ */
 function validTypo(typoWord, isValid, inputTypo) {
     let divTypo = document.getElementById("validationTypo");
     let form = document.getElementById("formTypo");
@@ -103,10 +172,15 @@ function validTypo(typoWord, isValid, inputTypo) {
     }
     divTypo.innerText = typoWord;
 }
+
+/**
+ * check if a file is put in the area upload_file
+ */
 document.getElementById('upload_file').addEventListener('change', readFile);
 
-
-// read file and check the extension
+/**
+ * read a file contains in upload-file input and check the extension
+ */
 function readFile(){
     let temporaryList = document.getElementById("temporary_list");
     let area = document.getElementById("wordList");
@@ -134,6 +208,53 @@ function readFile(){
             }
         }
     }
-
     file.readAsText(this.files[0]);
+}
+
+document.getElementById('validTransfo').addEventListener('change', addTransformation);
+
+function isEmpty(element){
+    let empty = false;
+    if(element.value === "" || element.value === "\n"){
+        empty = true;
+        console.log("Is empty");
+    }
+    return empty;
+}
+
+
+function addTransformation(){
+    //verif si liste non vide
+    let wordListString = sessionStorage.getItem("words");
+    let liste_not_empty = true;
+    if(wordListString == null || wordListString === "[]"){
+        liste_not_empty = false;
+    }
+
+    let valueTransfo = document.getElementById("validTransfo").checked;
+    if(valueTransfo && liste_not_empty){
+        sessionStorage.setItem("transformate", "true");
+        //avant de submit, on ajoute la liste des mots a transformer
+        let formTransfo = document.getElementById('formTransformation');
+        let element = document.getElementById("wordList");
+        //check if element is empty or not
+        if(!isEmpty(element)){
+            formTransfo.insertAdjacentElement('beforeend', element);
+            formTransfo.submit();
+        }
+    }else{
+        console.log("Transformation removed");
+        sessionStorage.setItem("transformate", "false");
+        //modifier le table et la remettre d'origine comme le formulaire hidden
+        checkSession();
+    }
+}
+
+function generation(){
+    //clear session storage
+    if(sessionStorage.getItem("words") != null){
+        let tab = [];
+        sessionStorage.setItem("words", JSON.stringify(tab));
+        sessionStorage.setItem("transformate", "false");
+    }
 }

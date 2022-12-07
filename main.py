@@ -168,10 +168,10 @@ def main(argv):
             index = sys.argv.index('-o')
             if index + 1 <= len(argv):
                 write_file(argv[index + 1], tab)
-        if '-no_print' not in argv :
+        if '-no_print' not in argv:
             print_tab(tab)
-
 
 if __name__ == '__main__':
     # steps()
+
     main(sys.argv)

@@ -1,0 +1,14 @@
+README.md
+tmp.txt
+venv
+.idea
+main.py
+index.html
+build_image_docker.sh
+get_docker.sh
+running_docker
+run_docker.sh
+start_docker.sh
+stop_docker.sh
+test.txt
+result.txt

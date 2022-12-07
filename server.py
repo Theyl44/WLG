@@ -3,16 +3,21 @@ import shutil
 
 from generator import Generator
 import urllib.parse as parseURL
-from http.server import HTTPServer, BaseHTTPRequestHandler, SimpleHTTPRequestHandler
-import time
-from io import BytesIO
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-hostname = "localhost"
-port = 8080
+hostname = "0.0.0.0"
+port = 80
+# hostname = "localhost"
+# port = 8080
 generator = Generator()
 
 
 class Handler(SimpleHTTPRequestHandler):
+    def min(self, var1, var2):
+        if int(var1) < int(var2):
+            return var1
+        return var2
+
     def do_GET(self):
 
         if self.path == "/result.txt":
@@ -42,7 +47,7 @@ class Handler(SimpleHTTPRequestHandler):
                 self.send_header("Content-type", "text/javascript")
                 self.send_header("Content-Disposition", 'inline; '
                                                         'filename="{}"'.format(
-                                                            os.path.basename("js/chat-mode_server.js")))
+                    os.path.basename("js/chat-mode_server.js")))
                 fs = os.fstat(file.fileno())
                 self.send_header("Content-Length", str(fs.st_size))
                 self.end_headers()
@@ -53,39 +58,25 @@ class Handler(SimpleHTTPRequestHandler):
             return SimpleHTTPRequestHandler.do_GET(self)
 
     def do_POST(self):
-        print("path : ", self.path)
         if self.path == "/?act=addTypo":
-            print("headers : ", self.headers)
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            print(body)
             typo = body.decode('utf-8').split("=")[1]
-            print(typo)
             generator.setTypo(typo)
             self.path = "/app.html"
             return SimpleHTTPRequestHandler.do_GET(self)
 
         elif self.path == "/?act=generateList":
-            print("headers : ", self.headers)
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            print(body)
             decodeBody = parseURL.unquote(body.decode('utf-8'))
-
             # collect typo
             typo = decodeBody.split("&")[0]
-            generator.setTypo(typo.split("=")[1])
+            generator.setTypo("'"+typo.split("=")[1]+"'")
 
             # collect list of words
             wordListRequest = decodeBody.split("&")[1].split("=")[1]
-            print("word list request : {0}".format(wordListRequest))
-            wordList = wordListRequest.split("\r")
-            if wordList.__contains__("\n"):
-                wordList.remove("\n")
-            # remove \n for each element
-            for i in range(0, len(wordList)):
-                wordList[i] = wordList[i].replace("\n", "")
-            print(wordList)
+            wordList = self.parseWordlist(wordListRequest)
 
             # write in file, the list of words
             temporaryListFile = "tmp.txt"
@@ -98,8 +89,9 @@ class Handler(SimpleHTTPRequestHandler):
                 codeHtml += line
                 if line.__contains__('id="generate_list"'):
                     resultGen = generator.get_result()
-                    for i in range(0, 50):
-                        msg = "<tr><td>"+str((i+1))+"</td><td>"+resultGen.__getitem__(i)+"</td></tr>"
+                    length_result = len(resultGen)
+                    for i in range(0, min(length_result, 50)):
+                        msg = "<tr><td>" + str((i + 1)) + "</td><td>" + str(resultGen[i]) + "</td></tr>"
                         codeHtml += msg
             fileHtml.close()
             self.send_response(200)
@@ -107,6 +99,39 @@ class Handler(SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(bytes(codeHtml, 'utf-8'))
 
+        elif self.path == "/?act=applyTransformation":
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
+            decodeBody = parseURL.unquote(body.decode('utf-8'))
+            wordListRequest = decodeBody.split("&")[1].split("=")[1]
+
+            wordList = self.parseWordlist(wordListRequest)
+
+            transformWordList = generator.add_tranformation(word_list=wordList)
+
+            self.path = "/app.html"
+            fileHtml = open('app.html', 'r', encoding='UTF-8')
+            codeHtml = ""
+            for line in fileHtml:
+                codeHtml += line
+                if line.__contains__('id="temporary_list"'):
+                    for i in range(0, len(transformWordList)):
+                        msg = "<tr><td>" + str((i + 1)) + "</td><td>" + str(transformWordList[i]) + "</td></tr>"
+                        codeHtml += msg
+            fileHtml.close()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html")
+            self.end_headers()
+            self.wfile.write(bytes(codeHtml, 'utf-8'))
+
+    def parseWordlist(self, wordListRequest):
+        wordList = wordListRequest.split("\r")
+        if wordList.__contains__("\n"):
+            wordList.remove("\n")
+        # remove \n for each element
+        for i in range(0, len(wordList)):
+            wordList[i] = wordList[i].replace("\n", "")
+        return wordList
 
     def do_PUT(self):
         filename = os.path.basename(self.path)
@@ -119,13 +144,19 @@ class Handler(SimpleHTTPRequestHandler):
             return
 
 
-web_server = HTTPServer((hostname, port), Handler)
-print("Server start on http://{0}:{1}\n".format(hostname, port))
+def main():
 
-try:
-    web_server.serve_forever()
-except KeyboardInterrupt:
-    pass
+    web_server = HTTPServer((hostname, port), Handler)
+    print("Server start on http://{0}:{1}\n".format(hostname, port))
 
-web_server.server_close()
-print("Server stopped")
+    try:
+        web_server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+
+    web_server.server_close()
+    print("Server stopped")
+
+
+if __name__ == "__main__":
+    main()
