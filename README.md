@@ -12,6 +12,11 @@ Exemple : Dans le cas d’un pentest de l’isen ouest, nous souhaitons génére
 
 video de présentation du projet
 
+
+<h2>Transformation</h2>
+<p align="center"><img style="width:3
+200px;" src="img/transfo_image.jpg" /></p>
+
 <h3>Ligne de commande</h3>
 <p>
     On peut se servir de ce programme en ligne de comme 
