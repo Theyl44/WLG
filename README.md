@@ -29,3 +29,27 @@ le serveur
 
     Le download est possible avec cette méthode
 </p>
+
+
+<h3>Script Shell</h3>
+<p>
+    Le programme est récupérable via Docker sous le nom <strong>saltas44/wlg_light:latest</strong>.
+    Pour se faire :
+        docker pull saltas44/wlg_light:latest
+    Puis pour lancer ce container :
+        docker run -d -p 8080:80 wlg_light
+        
+    Vous pouvez ainsi accéder au site via http://localhost:8080 sur votre machine.
+</p>
+<p>
+    Il est aussi possible d'utiliser les scripts shell disponible dans le dossier shell.
+    Voici la liste des scripts disponibles :
+        - get_docker.sh
+            --> Equivalent au docker pull du projet
+        - run_docker.sh
+            --> Equivalent a faire un docker run
+        - stop_docker.sh
+            --> Stop le docker du wlg_light grâce à son ID de container
+            
+    Accéder ensuite au site via http://localhost:8080 sur votre machine.
+</p>
