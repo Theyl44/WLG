@@ -19,7 +19,7 @@ video de présentation du projet
 <p align="center"><img style="width:3
 200px;" src="img/transfo_image.jpg" /></p>
 
-<h3>Ligne de commande</h3>
+<h2>Ligne de commande</h2>
 <p>
 Utilisation : 
 
@@ -37,7 +37,7 @@ Utilisation :
 </p>
 
 
-<h3>Docker</h3>
+<h2>Docker</h2>
 <p>
     Le programme est récupérable via Docker sous le nom <strong>saltas44/wlg_light:latest</strong>.
     
