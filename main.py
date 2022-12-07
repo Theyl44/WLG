@@ -171,7 +171,7 @@ def main(argv):
         if '-no_print' not in argv:
             print_tab(tab)
 
-
 if __name__ == '__main__':
     # steps()
+
     main(sys.argv)
