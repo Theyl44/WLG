@@ -10,7 +10,8 @@ Exemple : dans le cas de l'entreprise "ISEN", nous souhaitons générer une list
 </p>
 
 
-video de présentation du projet
+<h2>Video de présentation du projet</h2>
+![Presentation WLG](./presentation_WLG.mkv)
 
 
 <h2>Transformation</h2>
